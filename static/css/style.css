@@ -1,0 +1,61 @@
+div.container {
+    width: 100%;
+    border: 0px solid gray;
+}
+.flash {
+    background: #f3f529;
+    padding: 0.5em;
+}
+header, footer {
+    padding: 0em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: left;
+}
+
+nav {
+    float: left;
+    max-width: 120px;
+    margin: 0;
+    padding: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 150px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  color: white;
+}

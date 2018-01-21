@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+{% block content %}
+
+
+
+<div id="map" style="width:400px;height:400px;background:yellow"></div>
+
+<script>
+function myMap() {
+  var myCenter = new google.maps.LatLng(45.499170, -73.564269);
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {center: myCenter, zoom: 5};
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+  var marker = new google.maps.Marker({position:myCenter});
+  marker.setMap(map);
+
+  // Zoom to 9 when clicking on marker
+  google.maps.event.addListener(marker,'click',function() {
+    map.setZoom(9);
+    map.setCenter(marker.getPosition());
+  });
+}
+</script>
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&callback=myMap"></script>
+{% endblock %}
