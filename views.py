@@ -2,11 +2,10 @@
 # refactor --> get rid of the delete links and create a delete button, and check boxes.
 
 import sqlite3
-from functools import wraps
-
+# from functools import wraps
+import subprocess
 from forms import AddTaskForm
-from flask import Flask, flash, redirect, render_template, \
-    request, session, url_for, g
+from flask import *
 
 
 # config
@@ -81,3 +80,38 @@ def delete_entry(potluck_id):
 @app.route("/map")
 def map():
     return render_template("map.html")
+
+@app.route('/commands', methods=['GET', 'POST'])
+def commands(name=''):
+    if request.method == 'POST':
+        if request.form['submit'] == 'list':
+            cmd = ['ls', '-l']
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            out, error = p.communicate()
+            results = out.splitlines()
+            return render_template('commands.html', results=results)
+        elif request.form['submit'] == 'uname':
+            cmd = ['uname', '-a']
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            out, error = p.communicate()
+            results = out.splitlines()
+            return render_template('commands.html', results=results)
+        elif request.form['submit'] == 'shell':
+            cmd = ['python', 'ssh-to-host.py']
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            out, error = p.communicate()
+            results = out.splitlines()
+            return render_template('commands.html', results=results)
+        elif request.form['submit'] == 'myping':
+            cmd = ['ping', '-c', '2', 'ittellab-ptc07.cn.ca']
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            out, error = p.communicate()
+            results = out.splitlines()
+            return render_template('commands.html', results=results)
+        elif request.form['submit'] == 'tailme':
+            cmd = ['tail', '-n', '100', '/var/log/messages']
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            out, error = p.communicate()
+            results = out.splitlines()
+            return render_template('commands.html', results=results)
+    return render_template('commands.html', name=name)
