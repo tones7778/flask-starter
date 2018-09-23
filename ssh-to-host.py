@@ -11,6 +11,8 @@ import configparser
 # run and capture the results of 'uptime'
 # save to a sqlite db
 
+config = configparser.ConfigParser()
+config.read('secrets.ini')
 
 logging.basicConfig(filename='demo.log',
                     level=logging.DEBUG,
@@ -18,10 +20,10 @@ logging.basicConfig(filename='demo.log',
 
 logging.info("------------------- START ---------------------------------------")
 
-mydevices = ['hostname']  # catch bad hostname.
+mydevices = config['auth']['hostname']  # catch bad hostname.
 mycommand = 'cat /etc/redhat-release'  # catch bad command. Can not seem to catch a bad command.
-myusername = ['username']  # catch bad username.
-mypassword = ['']  # catch bad password or key
+myusername = config['auth']['username']  # catch bad username.
+mypassword = config['auth']['password']  # catch bad password or key
 
 
 try:
