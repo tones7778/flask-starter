@@ -4,11 +4,13 @@
 import paramiko
 import sqlite3
 import logging
+import configparser
 
 # read a list of hosts from file.
 # ssh to the linux host.
 # run and capture the results of 'uptime'
 # save to a sqlite db
+
 
 logging.basicConfig(filename='demo.log',
                     level=logging.DEBUG,
