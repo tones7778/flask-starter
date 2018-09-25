@@ -5,6 +5,7 @@ import paramiko
 import sqlite3
 import logging
 import configparser
+import socket
 
 
 config = configparser.ConfigParser()
@@ -39,7 +40,7 @@ except paramiko.SSHException as sshException:
 except paramiko.BadHostKeyException as badHostKeyException:
     print("Unable to verify server's host key: %s" % badHostKeyException)
     quit()
-except socket.error:
+except socket.error as msg:
     print(f"Could not connect to {i}")
     quit()
 except Exception as error:
@@ -48,13 +49,10 @@ except Exception as error:
     quit()
 
 try:
-    stdin, stdout, stderr = ssh.exec_command(mycommand)
-    results = stdout.readline()
-    print(results)
-    #for m in mycommand:
-    #    stdin,stdout,stderr = ssh.exec_command(m)
-    #    for line in stdout.readlines():
-    #        myresults =  line.strip()
+    stdin, stdout, stderr = ssh.exec_command(mycommand, bufsize=8000)
+    results = stdout.read()
+    final_results = results.decode(encoding='UTF-8')
+    print(final_results)
 
     ssh.close()
     logging.info("RESULTS: " + str(results))
